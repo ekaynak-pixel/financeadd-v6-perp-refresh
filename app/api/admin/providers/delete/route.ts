@@ -1,0 +1,1 @@
+import {NextRequest,NextResponse} from 'next/server';import {getDB} from '../../../../../lib/db';export const runtime='nodejs';export async function POST(req:NextRequest){const {id}=await req.json();if(!id) return NextResponse.json({error:'missing id'},{status:400});getDB().prepare('DELETE FROM api_keys WHERE id=?').run(id);return NextResponse.json({ok:true})}

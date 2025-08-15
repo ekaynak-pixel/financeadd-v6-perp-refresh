@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server';import {getDB} from '../../../../../lib/db';export const runtime='nodejs';export async function GET(){const rows=getDB().prepare('SELECT id,label,base_url,model,header_name,enabled,priority FROM api_keys ORDER BY priority ASC').all();return NextResponse.json({providers:rows})}

@@ -1,0 +1,4 @@
+import {NextResponse} from 'next/server';import {getDB} from '../../lib/db';export const runtime='nodejs';export async function GET(){const base=process.env.SITE_URL||'https://financeadd.com';const db=getDB();const posts=db.prepare('SELECT slug FROM posts ORDER BY created_at DESC').all();const searches=db.prepare('SELECT term FROM searches ORDER BY created_at DESC LIMIT 20000').all();const urls:string[]=[];for(const p of posts) urls.push(`${base}/blog/${p.slug}`);for(const s of searches) urls.push(`${base}/q/${encodeURIComponent(s.term)}`);const xml=`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u=>`<url><loc>${u}</loc></url>`).join('\n')}
+<url><loc>${base}</loc></url>\n<url><loc>${base}/discover</loc></url>\n</urlset>`;return new NextResponse(xml,{headers:{'Content-Type':'application/xml'}})}

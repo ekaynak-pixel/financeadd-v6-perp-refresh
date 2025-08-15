@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server';import {getDB} from '../../../../lib/db';export const runtime='nodejs';export async function GET(){const db=getDB();const posts=db.prepare('SELECT slug,title,created_at FROM posts ORDER BY created_at DESC LIMIT 6').all();return NextResponse.json({posts})}

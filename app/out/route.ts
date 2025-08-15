@@ -1,0 +1,1 @@
+import {NextRequest,NextResponse} from 'next/server';export const runtime='nodejs';export async function GET(req:NextRequest){const url=req.nextUrl.searchParams.get('url')||'';if(!/^https?:\/\//i.test(url)) return NextResponse.redirect('/',302);return NextResponse.redirect(url,302)}
