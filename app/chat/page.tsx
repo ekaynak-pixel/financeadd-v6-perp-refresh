@@ -27,9 +27,7 @@ export default function ChatPage(){
     while(true){
       const {value,done} = await reader.read();
       if(done) break;
-      acc += decoder.decode(value,{stream:true});
-      // protocol: text chunks, then "
-
+      acc += decoder.decode(value,{stream:true}); // protocol marker handled below
 @@SOURCES@@\n" + json + "\n@@END@@"
       const parts = acc.split('\n\n@@SOURCES@@\n');
       msg.content = parts[0];
